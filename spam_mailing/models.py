@@ -29,8 +29,8 @@ class Message(models.Model):
 
 
 class Mailing(models.Model):
-    date_start = models.DateTimeField(verbose_name='Дата начала рассылка', null=True, blank=True)
-    date_finish = models.DateTimeField(verbose_name='Дата конца рассылка', null=True, blank=True)
+    date_start = models.DateTimeField(verbose_name='Дата начала рассылки', null=True, blank=True)
+    date_finish = models.DateTimeField(verbose_name='Дата конца рассылки', null=True, blank=True)
     status_msg = models.CharField(verbose_name='статус сообщения', choices=[('Создана', 'Создана'), ('Завершена', 'Завершена'), ('Запущена', 'Запущена')])
     text_msg = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Сообщение', related_name='message')
     receivers_msgs = models.ManyToManyField(Receiver, verbose_name='Получатели', related_name='receiver')

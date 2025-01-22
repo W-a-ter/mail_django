@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from spam_mailing.models import Receiver, Message
+from spam_mailing.models import Receiver, Message, Mailing
 
 
 class ReceiverForm(ModelForm):
@@ -35,4 +35,29 @@ class MessageForm(ModelForm):
 
     class Meta:
         model = Message
+        fields = '__all__'
+
+
+class MailingForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(MailingForm, self).__init__(*args, **kwargs)
+
+        self.fields["date_start"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите тему письма"}
+        )
+        self.fields["date_finish"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите текст письма"}
+        )
+        self.fields["status_msg"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите текст письма"}
+        )
+        self.fields["text_msg"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите текст письма"}
+        )
+        self.fields["receivers_msgs"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите текст письма"}
+        )
+
+    class Meta:
+        model = Mailing
         fields = '__all__'

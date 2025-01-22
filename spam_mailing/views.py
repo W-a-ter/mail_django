@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from spam_mailing.forms import ReceiverForm, MessageForm
+from spam_mailing.forms import ReceiverForm, MessageForm, MailingForm
 from spam_mailing.models import Receiver, Mailing, Message
 
 
@@ -91,24 +91,38 @@ class MessageDeleteView(DeleteView):
 
 class MailingCreateView(CreateView):
     model = Mailing
-    template_name = 'spam_mailing/receiver_create.html'
+    template_name = 'spam_mailing/mailing_create.html'
+    context_object_name = 'mailing_create'
+    form_class = MailingForm
+
+    def get_success_url(self):
+        return reverse("spam_mailing:mailing", args=[self.kwargs.get("pk")])
 
 
 class MailingListView(ListView):
     model = Mailing
-    template_name = 'spam_mailing/receiver_list.html'
+    template_name = 'spam_mailing/mailing_list.html'
+    context_object_name = 'mailing_list'
 
 
 class MailingDetailView(DetailView):
     model = Mailing
-    template_name = 'spam_mailing/receiver_detail.html'
+    template_name = 'spam_mailing/mailing_detail.html'
+    context_object_name = 'mailing_detail'
 
 
 class MailingUpdateView(UpdateView):
     model = Mailing
-    template_name = 'spam_mailing/receiver_update.html'
+    template_name = 'spam_mailing/mailing_create.html'
+    context_object_name = 'mailing_update'
+    form_class = MailingForm
+
+    def get_success_url(self):
+        return reverse("spam_mailing:mailing", args=[self.kwargs.get("pk")])
 
 
 class MailingDeleteView(DeleteView):
     model = Mailing
-    template_name = 'spam_mailing/receiver_delete.html'
+    template_name = 'spam_mailing/mailing_delete.html'
+    context_object_name = 'mailing_delete'
+    success_url = reverse_lazy('spam_mailing:home')
