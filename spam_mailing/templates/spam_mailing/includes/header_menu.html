@@ -11,7 +11,7 @@
                        class="nav-link px-2 text-white">Получатели</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Рассылки</a>
                 </li>
-                <li><a href="#"
+                <li><a href="{% url 'spam_mailing:mailing_attempt' %}"
                        class="nav-link px-2 text-white">Статистика</a></li>
                     {% if perms.users.can_ban_user %}
                         <li><a href="#"
@@ -27,7 +27,7 @@
 
             <div class="text-end">
                 {% if user.is_authenticated %}
-                <form method="post" action="#" style="display: inline">
+                <form method="post" action="{% url 'users:logout' %}" style="display: inline">
                     {% csrf_token %}
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -50,8 +50,8 @@
                     </div>
                 </form>
                 {% else %}
-                <a class="btn btn-outline-light me-2" href="#">Войти</a>
-                <a class="p-2 btn btn-outline-primary" href="#">Регистрация</a>
+                <a class="btn btn-outline-light me-2" href="{% url 'users:login' %}">Войти</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
                 {% endif %}
             </div>
         </div>

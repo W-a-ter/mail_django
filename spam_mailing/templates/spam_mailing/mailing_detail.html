@@ -25,14 +25,16 @@
             <th scope="col">Текст сообщения</th>
             <th scope="col">Получатели</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>{{ mailing_detail.date_start }}</td>
-            <td>{{ mailing_detail.date_finish }}</td>
+            <td>{{ mailing_detail.date_end }}</td>
             <td>{{ mailing_detail.text_msg }}</td>
             <td>{{ mailing_detail.receivers_msgs }}</td>
+            <td scope="col"><a href="{% url 'spam_mailing:send_mail' %}" class="btn btn-outline-success">Запустить</a></td>
             <td>
                 {% if user.is_authenticated %}
                 <a href="#" class="text-decoration-none">

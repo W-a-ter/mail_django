@@ -30,8 +30,8 @@ class Message(models.Model):
 
 class Mailing(models.Model):
     date_start = models.DateTimeField(verbose_name='Дата начала рассылки', null=True, blank=True)
-    date_finish = models.DateTimeField(verbose_name='Дата конца рассылки', null=True, blank=True)
-    status_msg = models.CharField(verbose_name='статус сообщения', choices=[('Создана', 'Создана'), ('Завершена', 'Завершена'), ('Запущена', 'Запущена')])
+    date_end = models.DateTimeField(verbose_name='Дата конца рассылки', null=True, blank=True)
+    status = models.CharField(verbose_name='статус сообщения', choices=[('Создана', 'Создана'), ('Завершена', 'Завершена'), ('Запущена', 'Запущена')])
     text_msg = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='Сообщение', related_name='message')
     receivers_msgs = models.ManyToManyField(Receiver, verbose_name='Получатели', related_name='receiver')
 
@@ -45,12 +45,12 @@ class Mailing(models.Model):
 
 class MailingAttempt(models.Model):
     date_attempt = models.DateTimeField(verbose_name='Дата и время попытки', null=True, blank=True)
-    status_attempt = models.CharField(verbose_name='статус сообщения', choices=[('Успешно', 'Успешно'), ('Не успешно', 'Не успешно')])
-    answer_attempt = models.TextField(verbose_name='Текст', null=True, blank=True)
-    mailing_attempt = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='Расслылка', related_name='mailing')
+    status = models.CharField(verbose_name='статус сообщения', choices=[('Успешно', 'Успешно'), ('Не успешно', 'Не успешно')])
+    mail_response = models.TextField(verbose_name='Текст', null=True, blank=True)
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='Расслылка', related_name='mailing')
 
     def __str__(self):
-        return f'{self.mailing_attempt}'
+        return f'{self.mailing}'
 
     class Meta:
         verbose_name = 'Попытка расслыки'

@@ -1,14 +1,24 @@
+import smtplib
+
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from spam_mailing.forms import ReceiverForm, MessageForm, MailingForm
-from spam_mailing.models import Receiver, Mailing, Message
+from spam_mailing.models import Receiver, Mailing, Message, MailingAttempt
+from spam_mailing.services import send_mail_list
 
 
 class HomeView(ListView):
     model = Mailing
     template_name = 'spam_mailing/home.html'
     context_object_name = 'mailing'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_mailing'] = Mailing.objects.all()
+        context['active_mailing'] = Mailing.objects.filter(status='Запущена')
+        context['unique_receivers'] = Receiver.objects.all()
+        return context
 
 
 class ReceiverCreateView(CreateView):
@@ -95,8 +105,7 @@ class MailingCreateView(CreateView):
     context_object_name = 'mailing_create'
     form_class = MailingForm
 
-    def get_success_url(self):
-        return reverse("spam_mailing:mailing", args=[self.kwargs.get("pk")])
+    success_url = reverse_lazy('spam_mailing:home')
 
 
 class MailingListView(ListView):
@@ -126,3 +135,27 @@ class MailingDeleteView(DeleteView):
     template_name = 'spam_mailing/mailing_delete.html'
     context_object_name = 'mailing_delete'
     success_url = reverse_lazy('spam_mailing:home')
+
+
+class SendMail(ListView):
+    model = Mailing
+    template_name = 'spam_mailing/send_mail.html'
+    context_object_name = 'send_mail'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+
+        if self.object.status == "Создана":
+            try:
+                send_mail_list(self)  # Функция в разделе сервисы, отправляет сообщения по рассылке
+            except smtplib.SMTPException as error:
+                MailingAttempt.objects.create(mailing=self.object, mail_response=error, status='Не успешно')
+        return self.object
+
+
+class MailingAttempt(ListView):
+    model = MailingAttempt
+    template_name = 'spam_mailing/mailing_attempt.html'
+    context_object_name = 'mailing_attempt'
+
+

@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+    username = None
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

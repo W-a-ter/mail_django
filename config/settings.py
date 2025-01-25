@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "spam_mailing",
     'users',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -136,12 +138,30 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.yandex.ru'
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = "w.a.ter-123@yandex.ru"
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = False
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "your@yandex.ru"
-EMAIL_HOST_PASSWORD = "password"
+EMAIL_HOST_USER = "w.a.ter-123@yandex.ru"
+EMAIL_HOST_PASSWORD = "pvhmkgywcmazlerp"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_REDIRECT_URL = 'spam_mailing:home'
+LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'spam_mailing:home'
+
+SITE_ID = 1
 
 
 

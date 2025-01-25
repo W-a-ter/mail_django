@@ -1,7 +1,8 @@
 from django.urls import path, include
 from django.views.decorators.cache import cache_page
 
-from spam_mailing.views import HomeView, ReceiverCreateView, ReceiverDeleteView, ReceiverDetailView, ReceiverUpdateView, ReceiverListView, MailingCreateView, MailingCreateView, MailingDeleteView
+from spam_mailing.views import HomeView, ReceiverCreateView, ReceiverDeleteView, ReceiverDetailView, ReceiverUpdateView, \
+    ReceiverListView, MailingCreateView, MailingCreateView, MailingDeleteView, SendMail, MailingAttempt
 from spam_mailing.views import MailingCreateView, MailingDeleteView, MessageDeleteView, MessageDetailView, MessageUpdateView, MailingDetailView, MessageCreateView, MessageListView, MailingUpdateView, MailingListView
 
 app_name = 'spam_mailing'
@@ -23,4 +24,8 @@ urlpatterns = [
     path('mailing/create/', MailingCreateView.as_view(), name='mailing_create'),
     path('mailing/<int:pk>/update/', MailingUpdateView.as_view(), name='mailing_update'),
     path('mailing/<int:pk>/delete/', MailingDeleteView.as_view(), name='mailing_delete'),
+
+    path('mailing/send_mail/', SendMail.as_view(), name='send_mail'),
+    path('mailing_attempt/', MailingAttempt.as_view(), name='mailing_attempt'),
+
 ]

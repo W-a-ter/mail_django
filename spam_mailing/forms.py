@@ -45,10 +45,10 @@ class MailingForm(ModelForm):
         self.fields["date_start"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите тему письма"}
         )
-        self.fields["date_finish"].widget.attrs.update(
+        self.fields["date_end"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите текст письма"}
         )
-        self.fields["status_msg"].widget.attrs.update(
+        self.fields["status"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите текст письма"}
         )
         self.fields["text_msg"].widget.attrs.update(
