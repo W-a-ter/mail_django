@@ -20,19 +20,19 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Описание</th>
-            <th scope="col">Владелец</th>
+            <th scope="col">Дата начала рассылки</th>
+            <th scope="col">Дата конца расслылки</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Текст сообщения</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            {% for attempt in receiver_list %}
-                <td>{{ attempt.email }}</td>
-                <td>{{ attempt.name }}</td>
-                <td>{{ attempt.description }}</td>
-                <td>{{ attempt.owner }}</td>
+            {% for attempt in mailing_list %}
+                <td>{{ attempt.date_start }}</td>
+                <td>{{ attempt.date_end }}</td>
+                <td>{{ attempt.status }}</td>
+                <td>{{ attempt.text_msg }}</td>
             {% endfor %}
         </tr>
         </tbody>

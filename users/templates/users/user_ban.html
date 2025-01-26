@@ -21,18 +21,12 @@
         <thead>
         <tr>
             <th scope="col">Email</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Описание</th>
-            <th scope="col">Владелец</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            {% for attempt in receiver_list %}
+            {% for attempt in users %}
                 <td>{{ attempt.email }}</td>
-                <td>{{ attempt.name }}</td>
-                <td>{{ attempt.description }}</td>
-                <td>{{ attempt.owner }}</td>
             {% endfor %}
         </tr>
         </tbody>
