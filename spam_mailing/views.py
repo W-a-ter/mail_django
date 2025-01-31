@@ -44,7 +44,7 @@ class ReceiverCreateView(CreateView):
 
 class ReceiverListView(ListView):
     model = Receiver
-    template_name = "spam_mailing/receiver_list.html"
+    template_name = "spam_mailing/reciever_list.html"
     context_object_name = "receiver_list"
 
     def get_queryset(self):
@@ -214,7 +214,7 @@ class SendMail(ListView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
 
-        if self.object.status == "Создана":
+        if self.object.status == "Создана" and self.object.owner == self.request.user:
             try:
                 send_mail_list(self)  # Функция в разделе сервисы, отправляет сообщения по рассылке
             except smtplib.SMTPException as error:
@@ -224,7 +224,7 @@ class SendMail(ListView):
         return self.object
 
 
-class MailingAttempt(ListView):
+class MailingAttemptView(ListView):
     model = MailingAttempt
     template_name = "spam_mailing/mailing_attempt.html"
     context_object_name = "mailing_attempt"

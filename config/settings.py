@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-$^dtw&%v%cwvqc*3ilrv$_+zj5*o^4eyiz85b#n5=6=qauvfhu"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,7 +88,7 @@ DATABASES = {
         "USER": "postgres",
         "HOST": "localhost",
         "PORT": "5436",
-        "PASSWORD": "1111",
+        "PASSWORD": os.getenv('PASSWORD')
     }
 }
 
@@ -139,18 +143,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.CustomUser"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST = 'smtp.yandex.ru'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = "w.a.ter-123@yandex.ru"
-# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_TLS = False
-# EMAIL_USE_SSL = True
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "w.a.ter-123@yandex.ru"
-EMAIL_HOST_PASSWORD = "pvhmkgywcmazlerp"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
