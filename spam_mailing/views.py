@@ -30,6 +30,7 @@ class ReceiverCreateView(CreateView):
     template_name = "spam_mailing/receiver_create.html"
     context_object_name = "receiver_create"
     form_class = ReceiverForm
+    success_url = reverse_lazy("spam_mailing/home")
 
     def form_valid(self, form):
         receiver = form.save()
@@ -37,9 +38,6 @@ class ReceiverCreateView(CreateView):
         receiver.owner = user
         receiver.save()
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("spam_mailing:receiver", args=[self.kwargs.get("pk")])
 
 
 class ReceiverListView(ListView):
@@ -100,6 +98,7 @@ class MessageCreateView(CreateView):
     template_name = "spam_mailing/message_create.html"
     context_object_name = "message_create"
     form_class = MessageForm
+    success_url = reverse_lazy("spam_mailing:home")
 
     def form_valid(self, form):
         receiver = form.save()
@@ -107,9 +106,6 @@ class MessageCreateView(CreateView):
         receiver.owner = user
         receiver.save()
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("spam_mailing:message", args=[self.kwargs.get("pk")])
 
 
 class MessageListView(ListView):
