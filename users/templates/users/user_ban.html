@@ -1,0 +1,35 @@
+{% extends 'spam_mailing/basic_design.html' %}
+{% load my_tags %}
+{% block title %}Получатель{% endblock %}
+
+{% block header %}
+{% include 'spam_mailing/includes/header_menu.html' %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">SendMail Service</h1>
+    <p class="lead">Пользователи для отправки сообщений</p>
+    {% if user.is_authenticated %}
+    <a class="btn btn-lg btn-block btn-outline-primary" href="#">Добавить
+        рассылку</a>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for attempt in users %}
+                <td>{{ attempt.email }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
