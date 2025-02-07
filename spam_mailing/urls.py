@@ -3,7 +3,8 @@ from django.urls import path
 from spam_mailing.views import (HomeView, MailingAttemptView, MailingCreateView, MailingDeleteView, MailingDetailView,
                                 MailingListView, MailingStopView, MailingUpdateView, MessageCreateView,
                                 MessageDeleteView, MessageDetailView, MessageUpdateView, ReceiverCreateView,
-                                ReceiverDeleteView, ReceiverDetailView, ReceiverListView, ReceiverUpdateView, SendMail)
+                                ReceiverDeleteView, ReceiverDetailView, ReceiverListView, ReceiverUpdateView, SendMail,
+                                UserListView)
 
 app_name = "spam_mailing"
 
@@ -27,4 +28,6 @@ urlpatterns = [
     path("list_view/", ReceiverListView.as_view(), name="list_view"),
     path("mailing_list/", MailingListView.as_view(), name="mailing_view"),
     path("mailing_stop/<int:pk>/", MailingStopView.as_view(), name="mailing_stop"),
+
+    path("user_list/", UserListView.as_view(), name="user_list"),
 ]

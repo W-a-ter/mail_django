@@ -14,7 +14,7 @@
                 <li><a href="{% url 'spam_mailing:mailing_attempt' %}"
                        class="nav-link px-2 text-white">Статистика</a></li>
                     {% if perms.users.can_ban_user %}
-                        <li><a href="#"
+                        <li><a href="{% url 'spam_mailing:user_list' %}"
                                class="nav-link px-2 text-white">Пользователи</a></li>
                     {% endif %}
                 {% endif %}
@@ -37,9 +37,7 @@
                             <strong>{{ user.email }}</strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">Создать рассылку</a></li>
-                            <li><a class="dropdown-item" href="#">Настройки</a></li>
-                            <li><a class="dropdown-item" href="#">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{% url 'spam_mailing:mailing_create' %}">Создать рассылку</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

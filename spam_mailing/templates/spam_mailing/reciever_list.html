@@ -8,8 +8,8 @@
     <h1 class="display-4">SendMail Service</h1>
     <p class="lead">Пользователи для отправки сообщений</p>
     {% if user.is_authenticated %}
-    <a class="btn btn-lg btn-block btn-outline-primary" href="#">Добавить
-        рассылку</a>
+    <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'spam_mailing:receiver_create' %}">Добавить
+        получателя</a>
     {% endif %}
 </div>
 

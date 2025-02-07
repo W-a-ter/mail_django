@@ -9,9 +9,10 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from spam_mailing.forms import MailingForm, MessageForm, ReceiverForm
 from spam_mailing.models import Mailing, MailingAttempt, Message, Receiver
 from spam_mailing.services import send_mail_list
+from users.models import CustomUser
 
 
-@method_decorator(cache_page(60), name="dispatch")
+#@method_decorator(cache_page(60), name="dispatch")
 class HomeView(ListView):
     model = Mailing
     template_name = "spam_mailing/home.html"
@@ -52,7 +53,7 @@ class ReceiverListView(ListView):
         return Receiver.objects.filter(owner=self.request.user)
 
 
-@method_decorator(cache_page(60), name="dispatch")
+#@method_decorator(cache_page(60), name="dispatch")
 class ReceiverDetailView(DetailView):
     model = Receiver
     template_name = "spam_mailing/receiver_detail.html"
@@ -240,3 +241,15 @@ class MailingStopView(DetailView):
             self.object.status = "Завершена"
             self.object.save()
         return self.object
+
+
+class UserListView(ListView):
+    model = CustomUser
+    template_name = "spam_mailing/user_list.html"
+    context_object_name = "users"
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.has_perm("users.can_ban_user"):
+            return CustomUser.objects.all()
+        return PermissionDenied
