@@ -12,7 +12,7 @@ from spam_mailing.services import send_mail_list
 from users.models import CustomUser
 
 
-#@method_decorator(cache_page(60), name="dispatch")
+@method_decorator(cache_page(60), name="dispatch")
 class HomeView(ListView):
     model = Mailing
     template_name = "spam_mailing/home.html"
@@ -31,7 +31,7 @@ class ReceiverCreateView(CreateView):
     template_name = "spam_mailing/receiver_create.html"
     context_object_name = "receiver_create"
     form_class = ReceiverForm
-    success_url = reverse_lazy("spam_mailing/home")
+    success_url = reverse_lazy("spam_mailing:home")
 
     def form_valid(self, form):
         receiver = form.save()
@@ -53,7 +53,7 @@ class ReceiverListView(ListView):
         return Receiver.objects.filter(owner=self.request.user)
 
 
-#@method_decorator(cache_page(60), name="dispatch")
+@method_decorator(cache_page(60), name="dispatch")
 class ReceiverDetailView(DetailView):
     model = Receiver
     template_name = "spam_mailing/receiver_detail.html"

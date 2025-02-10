@@ -40,14 +40,14 @@ def send_mail_list(self):
 class GetListMailing:
     """Класс обработки получения списка продуктов"""
 
-    # @staticmethod
-    # def get_list_mailing_from_cache():
-    #     """Метод получает данные от БД, если списка продуктов нет в кэше, то добавляет его и возвращает список"""
-    #     key = "mailing_list"
-    #     mailing = cache.get(key)
-    #
-    #     if mailing is not None:
-    #         return mailing
-    #     products = Mailing.objects.all()
-    #     cache.set(key, products)
-    #     return products
+    @staticmethod
+    def get_list_mailing_from_cache():
+        """Метод получает данные от БД, если списка продуктов нет в кэше, то добавляет его и возвращает список"""
+        key = "mailing_list"
+        mailing = cache.get(key)
+
+        if mailing is not None:
+            return mailing
+        products = Mailing.objects.all()
+        cache.set(key, products)
+        return products
